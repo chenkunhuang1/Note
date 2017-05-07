@@ -114,6 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(MainActivity.this,"   ",Toast.LENGTH_SHORT).show();
+        
     }
 }
