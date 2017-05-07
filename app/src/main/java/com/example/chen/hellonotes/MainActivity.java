@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //创建一个可添加权限
     private SQLiteDatabase dbRead;
     private MyAdapter mAdapter;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotesDB = new NotesDB(this);
         //添加读取权限
         dbRead = mNotesDB.getReadableDatabase();
+        mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //获取当前cursor的position
+                cursor.moveToPosition(position);
+                Intent i = new Intent(MainActivity.this,SelectAct.class);
+                //携带数据传入另一个页面
+                i.putExtra(NotesDB.ID,cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));//ID为int类型
+                i.putExtra(NotesDB.CONTENT,cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));//CONTENT为String类型
+                i.putExtra(NotesDB.PATH,cursor.getString(cursor.getColumnIndex(NotesDB.PATH)));
+                i.putExtra(NotesDB.VIDEO,cursor.getString(cursor.getColumnIndex(NotesDB.VIDEO)));
+                i.putExtra(NotesDB.TIME,cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                startActivity(i);
+
+            }
+        });
 
     }
 
@@ -81,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return str;
     }*/
     public void selectDB(){
-       Cursor cursor = dbRead.query(NotesDB.TABLE_NAME,null,null,null,null,null,null,null);
+        cursor = dbRead.query(NotesDB.TABLE_NAME,null,null,null,null,null,null);
         mAdapter = new MyAdapter(this,cursor);
         mlv.setAdapter(mAdapter);
     }
