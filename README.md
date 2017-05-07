@@ -1,0 +1,2 @@
+# HelloNote
+功能
