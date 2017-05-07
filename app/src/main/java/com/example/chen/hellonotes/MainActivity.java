@@ -111,9 +111,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         selectDB();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        
-    }
+    
 }
