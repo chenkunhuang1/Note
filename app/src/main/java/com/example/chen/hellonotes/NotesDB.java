@@ -34,7 +34,6 @@ public class NotesDB extends SQLiteOpenHelper {
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + CONTENT
                 + " TEXT NOT NULL,"  + TIME + " TEXT NOT NULL)");*/
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
